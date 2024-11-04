@@ -73,6 +73,8 @@ parking=Parking(2,6)
 parking.afficher_parking()
 parking.ajouter_voiture(2,1)
 parking.afficher_parking()
+parking.retirer_voiture(2,1)
+parking.afficher_parking()
 """parking.retirer_voiture(2,3)
 parking.afficher_parking()"""
 
