@@ -26,11 +26,14 @@ class Parking:
         if self.parking_plein():
             print("Le parking est complet")
             return
-        if etage < 0 or place < 0 or etage > self.etages or place > self.places_par_etage:
-            print("Erreur, cette place n existe pas")
-            return
+
+
         # si un etage et une place sont choisis
         if etage is not None and place is not None:
+            if etage < 0 or place < 0 or etage > self.etages or place > self.places_par_etage:
+                print("Erreur, cette place n existe pas")
+                return
+
             etage-=1
             place-=1
             if self.places[etage][place] is False:
@@ -68,10 +71,10 @@ class Parking:
 
 parking=Parking(2,6)
 parking.afficher_parking()
-parking.ajouter_voiture(2,3)
+parking.ajouter_voiture(2,1)
 parking.afficher_parking()
-parking.retirer_voiture(2,3)
-parking.afficher_parking()
+"""parking.retirer_voiture(2,3)
+parking.afficher_parking()"""
 
 """parking.ajouter_voiture(2,4)
 parking.retirer_voiture(2,3)
