@@ -69,24 +69,42 @@ class Parking:
             print(f"Voiture retirée de l'étage {etage+1}, place {place+1}")
 
 
-parking=Parking(2,6)
+if __name__ == "__main__":
+    while True:
+        try:
+            etages = int(input("Entrez le nombre d'étages : "))
+            places_par_etage = int(input("Entrez le nombre de places par étage : "))
+            break
+        except ValueError:
+            print("Veuillez entrer des nombres valides.")
+
+    parking = Parking(etages, places_par_etage)
+    while True:
+        print("\nOptions: 1) Afficher parking 2) Ajouter voiture 3) Retirer voiture 4) Quitter")
+        choix = input("Choisissez une option: ")
+        if choix == '1':
+            parking.afficher_parking()
+        elif choix == '2':
+            etage = input("Étage (ou vide pour automatique) : ")
+            place = input("Place (ou vide pour automatique) : ")
+            etage = int(etage) if etage else None
+            place = int(place) if place else None
+            parking.ajouter_voiture(etage, place)
+        elif choix == '3':
+            try:
+                etage = int(input("Étage : "))
+                place = int(input("Place : "))
+                parking.retirer_voiture(etage, place)
+            except ValueError:
+                print("Veuillez entrer des nombres valides.")
+        elif choix == '4':
+            break
+        else:
+            print("Option invalide.")
+
+"""parking=Parking(2,6)
 parking.afficher_parking()
 parking.ajouter_voiture(2,1)
 parking.afficher_parking()
 parking.retirer_voiture(2,1)
-parking.afficher_parking()
-
-
-
-"""parking.retirer_voiture(2,3)
 parking.afficher_parking()"""
-
-"""parking.ajouter_voiture(2,4)
-parking.retirer_voiture(2,3)
-parking.afficher_parking()
-parking.retirer_voiture(4,7)
-parking.afficher_parking()
-parking.retirer_voiture(1,2)"""
-
-
-
