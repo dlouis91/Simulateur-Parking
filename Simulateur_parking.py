@@ -68,6 +68,9 @@ class Parking:
             self.places_libres +=1
             print(f"Voiture retirée de l'étage {etage+1}, place {place+1}")
 
+    def get_status(self):
+        """Retourne l'état actuel des places du parking"""
+        return self.places
 
 if __name__ == "__main__":
     while True:
