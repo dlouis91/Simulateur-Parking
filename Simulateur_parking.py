@@ -23,35 +23,37 @@ class Parking:
             print("Le parking est complet")
 
     def ajouter_voiture(self, etage=None, place=None):
+        # Vérifie si le parking est complet
         if self.parking_plein():
-            print("Le parking est complet")
-            return
+            return False  # Indique que le parking est plein
 
-
-        # si un etage et une place sont choisis
+        # Si un étage et une place sont spécifiés
         if etage is not None and place is not None:
             if etage < 0 or place < 0 or etage > self.etages or place > self.places_par_etage:
                 print("Erreur, cette place n existe pas")
-                return
+                return None
 
-            etage-=1
-            place-=1
-            if self.places[etage][place] is False:
-                self.places[etage][place]= True
+            # Ajustement des indices pour correspondre aux listes (qui commencent à 0)
+            etage -= 1
+            place -= 1
+
+            # Vérifie si la place est libre
+            if not self.places[etage][place]:
+                self.places[etage][place] = True
                 self.places_libres -= 1
-                print(f"la voiture est garée à l'étage {etage+1}, place {place+1}")
+                return (etage + 1, place + 1)  # Retourne le résultat en format humain (commençant à 1)
             else:
-                print(f"La place à l'étage {etage+1}, place {place+1} est déjà occupée")
+                return None  # Indique que la place est déjà occupée
 
-        # si l'utilisateur ne choisis pas de place
-        else:
-            for e in range(self.etages):
-                for p in range(self.places_par_etage):
-                    if not self.places[e][p]:
-                        self.places[e][p]=True
-                        self.places_libres -= 1
-                        print(f"la voiture est garée à l'étage {e+1}, place {p+1}")
-                        return
+        # Si l'utilisateur ne spécifie pas de place, recherche la première place libre
+        for e in range(self.etages):
+            for p in range(self.places_par_etage):
+                if not self.places[e][p]:  # Trouve la première place libre
+                    self.places[e][p] = True
+                    self.places_libres -= 1
+                    return (e + 1, p + 1)
+
+        return False  # Cas ou aucune place libre n'est trouvée
 
     def retirer_voiture(self, etage, place):
         """retire la voiture à l'emplacement indiqué"""
@@ -63,10 +65,12 @@ class Parking:
             return
         if self.places[etage][place] is False:
             print("Attention, aucune voiture n'est garée a cette place")
+            return False
         if self.places[etage][place]:
             self.places[etage][place]=False
             self.places_libres +=1
             print(f"Voiture retirée de l'étage {etage+1}, place {place+1}")
+            return True
 
     def get_status(self):
         """Retourne l'état actuel des places du parking"""
