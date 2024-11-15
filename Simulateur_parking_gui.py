@@ -51,4 +51,42 @@ class ParkingApp:
         self.create_controls()
         self.update_places_disponibles()
         self.draw_parking()
+    def create_controls(self):
+        # Contrôles d'ajout de véhicule
+        self.controls_frame = ttk.Frame(self.master)
+        self.controls_frame.pack(pady=10)
+
+        self.add_label = ttk.Label(self.controls_frame, text="Ajouter (Étage, Place) :")
+        self.add_label.grid(row=0, column=0, padx=5)
+
+        self.add_etage = ttk.Entry(self.controls_frame, width=3)
+        self.add_etage.grid(row=0, column=1, padx=5)
+
+        self.add_place = ttk.Entry(self.controls_frame, width=3)
+        self.add_place.grid(row=0, column=2, padx=5)
+
+        self.vehicle_menu = ttk.OptionMenu(self.controls_frame, self.vehicle_type, "Voiture", "Voiture", "Moto",
+                                           "Camion")
+        self.vehicle_menu.grid(row=0, column=3, padx=5)
+
+        self.add_button = ttk.Button(self.controls_frame, text="Ajouter", command=self.add_car)
+        self.add_button.grid(row=0, column=4, padx=5)
+
+        # Contrôle pour retirer le véhicule
+        self.remove_label = ttk.Label(self.controls_frame, text="Retirer (Étage, Place) :")
+        self.remove_label.grid(row=1, column=0, padx=5)
+
+        self.remove_etage = ttk.Entry(self.controls_frame, width=3)
+        self.remove_etage.grid(row=1, column=1, padx=5)
+
+        self.remove_place = ttk.Entry(self.controls_frame, width=3)
+        self.remove_place.grid(row=1, column=2, padx=5)
+
+        self.remove_button = ttk.Button(self.controls_frame, text="Retirer", command=self.remove_car)
+        self.remove_button.grid(row=1, column=4, padx=5)
+
+        # Label d'affichage des places disponibles
+        self.places_disponibles_label = ttk.Label(self.master, text="", font=("Helvetica", 12, "bold"))
+        self.places_disponibles_label.pack(pady=5)
+
 
