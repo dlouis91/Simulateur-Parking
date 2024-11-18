@@ -285,6 +285,10 @@ class Parking:
         cursor = self.db.cursor()
         cursor.execute('DELETE FROM voitures')
         self.places_occupees = self.get_places_occupees()
+        self.refused = 0
+        self.accepted = 0
+        self.total_car = 0
+        self.gain_parking = 0
         db.commit()
 
 class ParkingApp:
