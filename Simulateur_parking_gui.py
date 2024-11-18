@@ -89,4 +89,45 @@ class ParkingApp:
         self.places_disponibles_label = ttk.Label(self.master, text="", font=("Helvetica", 12, "bold"))
         self.places_disponibles_label.pack(pady=5)
 
+    def draw_parking(self):
+        self.canvas.delete("all")
+
+        for etage in range(self.etages):
+            for place in range(self.places_par_etage):
+                x1 = place * self.case_width
+                y1 = etage * (self.case_height + self.etage_spacing)
+                x2 = x1 + self.case_width
+                y2 = y1 + self.case_height
+
+                occupied = self.parking[etage][place]
+                color = "green" if not occupied else "red"
+                rect = self.canvas.create_rectangle(x1, y1, x2, y2, fill=color, outline="black")
+
+                # Associer le clic pour ajouter/retirer
+                self.canvas.tag_bind(rect, "<Button-1>",
+                                     lambda event, e=etage + 1, p=place + 1: self.toggle_place(e, p))
+
+                # Afficher le numéro de la place
+                self.canvas.create_text((x1 + x2) / 2, (y1 + y2) / 2, text=f"{etage + 1}-{place + 1}", fill="white")
+
+    def add_car(self):
+        try:
+            etage = int(self.add_etage.get())
+            place = int(self.add_place.get())
+            vehicle = self.vehicle_type.get()
+
+            if not (1 <= etage <= self.etages) or not (1 <= place <= self.places_par_etage):
+                messagebox.showerror("Erreur", "Place inexistante.")
+                return
+
+            if self.parking[etage - 1][place - 1]:
+                messagebox.showerror("Erreur", "Place déjà occupée.")
+                return
+
+            self.parking[etage - 1][place - 1] = True
+            self.entry_times[(etage, place)] = time.time()
+            self.update_places_disponibles()
+
+        except ValueError:
+            messagebox.showerror("Erreur", "Veuillez entrer des numéros valides pour l'étage et la place.")
 
