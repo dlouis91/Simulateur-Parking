@@ -131,3 +131,45 @@ class ParkingApp:
         except ValueError:
             messagebox.showerror("Erreur", "Veuillez entrer des numéros valides pour l'étage et la place.")
 
+    def remove_car(self):
+        try:
+            etage = int(self.remove_etage.get())
+            place = int(self.remove_place.get())
+            if not (1 <= etage <= self.etages) or not (1 <= place <= self.places_par_etage):
+                messagebox.showerror("Erreur", "Place inexistante.")
+                return
+
+            if not self.parking[etage - 1][place - 1]:
+                messagebox.showerror("Erreur", "Aucun véhicule à retirer ici.")
+                return
+
+            self.parking[etage - 1][place - 1] = False
+            entry_time = self.entry_times.pop((etage, place), None)
+            if entry_time:
+                # Calculer la durée de stationnement avec 1 heure = 10 secondes
+                duration = time.time() - entry_time
+                hours = duration // 10  # Chaque "heure" est de 10 secondes
+                cost = hours * 2  # Tarif de 2€ par heure
+                messagebox.showinfo("Coût", f"Durée : {int(hours)} h. Coût : {cost} €")
+            self.update_places_disponibles()
+
+        except ValueError:
+            messagebox.showerror("Erreur", "Veuillez entrer des numéros valides pour l'étage et la place.")
+
+    def toggle_place(self, etage, place):
+        if self.parking[etage - 1][place - 1]:
+            self.remove_car()
+        else:
+            self.add_car()
+
+    def update_places_disponibles(self):
+        places_libres = sum(row.count(False) for row in self.parking)
+        total_places = self.etages * self.places_par_etage
+        self.places_disponibles_label.config(text=f"Places disponibles : {places_libres}/{total_places}")
+        self.draw_parking()
+
+
+if __name__ == "__main__":
+    root = tk.Tk()
+    app = ParkingApp(root)
+    root.mainloop()
