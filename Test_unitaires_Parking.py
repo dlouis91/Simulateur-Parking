@@ -8,6 +8,7 @@ class TestParking(unittest.TestCase):
     def test_initialisation(self):
         self.assertEqual(self.parking.places_libres, 4)
 
+
     def test_ajouter_voiture(self):
         result = self.parking.ajouter_voiture()
         self.assertEqual(result, (1, 1))
