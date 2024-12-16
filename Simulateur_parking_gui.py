@@ -163,9 +163,9 @@ class ParkingApp:
             self.add_car()
 
     def update_places_disponibles(self):
-        places_libres = sum(row.count(False) for row in self.parking)
+        places_libres = sum(row.count(False) for row in self.parking) #calcul des places libres
         total_places = self.etages * self.places_par_etage
-        self.places_disponibles_label.config(text=f"Places disponibles : {places_libres}/{total_places}")
+        self.places_disponibles_label.config(text=f"Places disponibles : {places_libres}/{total_places}") #maj du label
         self.draw_parking()
 
 
