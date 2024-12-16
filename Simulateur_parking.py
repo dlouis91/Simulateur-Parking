@@ -87,8 +87,9 @@ if __name__ == "__main__":
 
     parking = Parking(etages, places_par_etage)
     while True:
-        print("\nOptions: 1) Afficher parking 2) Ajouter voiture 3) Retirer voiture 4) Quitter")
+        print("\nOptions: 1) Afficher parking 2) Ajouter voiture 3) Retirer voiture 4) Quitter") # options de départ
         choix = input("Choisissez une option: ")
+        """choix des options au cas par cas"""
         if choix == '1':
             parking.afficher_parking()
         elif choix == '2':
